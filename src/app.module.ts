@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { join } from 'path';
       }),
     }),
     AuthModule,
-    UserModule
+    UserModule,
+    EventsModule,
   ],
   controllers: [],
   providers: [],

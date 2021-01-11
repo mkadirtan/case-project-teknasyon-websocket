@@ -4,7 +4,7 @@ import { UserRepository } from './user.repository';
 import { RegisterDto } from '../auth/dto/register.dto';
 import { LoginDto } from 'src/auth/dto/login.dto';
 import { UserDetailDto } from './dto/user-detail.dto';
-import { omit } from 'lodash';
+import { pick } from 'lodash';
 
 @Injectable()
 export class UserService {
@@ -30,6 +30,6 @@ export class UserService {
       throw new NotFoundException();
     }
 
-    return omit(user, ['salt', 'password', 'id']);
+    return pick(user, ['name', 'surname', 'email', 'language', 'country']);
   }
 }
