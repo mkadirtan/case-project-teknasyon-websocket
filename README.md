@@ -35,3 +35,15 @@ These are the events you can receive from the Gateway:
 
 ```
 
+## Architecture
+
+The project consists of the core app written in NestJS, haproxy as load balancer, postgresql as database and redis as a transport mechanism for events.
+
+Haproxy configuration forces a client to be connected to same Nestapp instance over a long duration to preserve socket connection.
+
+### Example flow of the Events
+
+- When a user login to system, Auth module fires a local event, 'LOCAL-user-login'.
+- This event is then handled by Message module to propagate this event to Message Broker ( REDIS ), hence the other Nestapp instances.
+- Message module then handles the event received from REDIS and fires another local event, 'GLOBAL-user-login'.
+- 'LOCAL-* ' events are fired within the Nestapp instanced that actually performs the action ( the server user logged in ), whereas 'GLOBAL-* ' action is fired within all Nestapp instances. The flow of events ensure that the system acts as one instance for the client and horizontally scalable.
