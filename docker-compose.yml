@@ -3,6 +3,10 @@ version: '3'
 services:
   lb:
     image: haproxy
+    depends_on:
+      - nestapp1
+      - nestapp2
+      - nestapp3
     networks:
       - case
     ports:
@@ -29,21 +33,21 @@ services:
     networks:
       - case
     depends_on:
-      - rmq
+      - redis
       - pg
   nestapp2:
     build: ./
     networks:
       - case
     depends_on:
-      - rmq
+      - redis
       - pg
   nestapp3:
     build: ./
     networks:
       - case
     depends_on:
-      - rmq
+      - redis
       - pg
 networks:
   case:
