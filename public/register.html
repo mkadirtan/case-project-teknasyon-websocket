@@ -3,7 +3,7 @@
 <head>
   <meta charset='UTF-8'>
   <title>Register</title>
-  <script src='http://localhost:3000/socket.io/socket.io.js'></script>
+  <script src='http://localhost:8080/socket.io/socket.io.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js'
           integrity='sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=='
           crossorigin='anonymous'></script>
@@ -46,7 +46,7 @@
 
 <script>
   const form = document.getElementById('register-form');
-  form.onsubmit = d => {
+  form.onsubmit = () => {
     const formData = {};
     const length = form.children.length;
     for (let i = 0; i < length; i++) {
@@ -61,9 +61,9 @@
       console.error('passwords don\'t match');
     }
 
-    axios.post('http://localhost:3000/auth/register', {
+    axios.post('http://localhost:8080/auth/register', {
       name, surname, email, password, country, language,
-    }).then(res => {
+    }).then(() => {
       console.log('Successfully created account!');
     }).catch(err => {
       console.log(err.response.data.message);

@@ -10,7 +10,7 @@ import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: 'development.env' }),
+    ConfigModule.forRoot({ isGlobal: true }),
     EventEmitterModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

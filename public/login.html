@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Login</title>
+  <script src='http://localhost:8080/socket.io/socket.io.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js'
+          integrity='sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=='
+          crossorigin='anonymous'></script>
+</head>
+<body>
+<form id='login-form'>
+  <label for='email'>Email: </label>
+  <input name='email' id='email' type='email'><br>
+
+  <label for='password'>Password: </label>
+  <input name='password' id='password' type='password'><br>
+
+  <input type='submit' value='Login'>
+</form>
+
+
+<script>
+  const form = document.getElementById('login-form');
+  form.onsubmit = () => {
+    const formData = {};
+    const length = form.children.length;
+    for (let i = 0; i < length; i++) {
+      const child = form.children[i];
+      if (child.nodeName === 'INPUT') {
+        formData[child.id] = child.value;
+      }
+    }
+
+    const { email, password } = formData;
+
+    axios.post('http://localhost:8080/auth/login', {
+      email, password,
+    }).then((res) => {
+      console.log('Successfully logged in!');
+      const { access_token } = res.data;
+      console.log({ access_token });
+      const socket = io('http://localhost:8080/socket', { query: { access_token } });
+      socket.on('user-register', e => console.log('user-register', { e }));
+      socket.on('user-login', e => console.log('user-login', { e }));
+      socket.on('user-logout', e => console.log('user-logout', { e }));
+      // Login socket
+    }).catch(err => {
+      console.log(err);
+    });
+
+    return false;
+  };
+</script>
+</body>
+</html>
