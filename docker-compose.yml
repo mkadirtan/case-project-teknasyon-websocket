@@ -20,12 +20,10 @@ services:
       - POSTGRES_DB=teknasyon
       - POSTGRES_USER=teknasyon
       - POSTGRES_PASSWORD=Teknasyon1!
-  rmq:
-    image: rabbitmq:3.8
+  redis:
+    image: redis
     networks:
       - case
-    volumes:
-      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
   nestapp1:
     build: ./
     networks:

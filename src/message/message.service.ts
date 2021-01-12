@@ -7,7 +7,7 @@ import { UserDetailDto } from '../user/dto/user-detail.dto';
 export class MessageService {
   constructor(
     private readonly eventEmitter: EventEmitter2,
-    @Inject('RMQ_CLIENT') private readonly clientProxy: ClientProxy,
+    @Inject('REDIS_CLIENT') private readonly clientProxy: ClientProxy,
   ) {}
 
   emitEvent(eventName: string, eventData: any): void {

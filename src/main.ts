@@ -7,14 +7,9 @@ async function bootstrap() {
   app.enableCors();
 
   app.connectMicroservice({
-    transport: Transport.RMQ,
+    transport: Transport.REDIS,
     options: {
-      urls: [process.env.RMQ_CONNECTION_URL],
-      queue: process.env.RMQ_QUEUE,
-      noAck: true,
-      queueOptions: {
-        durable: true,
-      },
+      url: process.env.REDIS_CONNECTION_URL,
     },
   });
 
