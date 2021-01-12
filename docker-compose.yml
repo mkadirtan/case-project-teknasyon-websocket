@@ -3,6 +3,10 @@ version: '3'
 services:
   lb:
     image: haproxy
+    depends_on:
+      - nestapp1
+      - nestapp2
+      - nestapp3
     networks:
       - case
     ports:
@@ -20,32 +24,30 @@ services:
       - POSTGRES_DB=teknasyon
       - POSTGRES_USER=teknasyon
       - POSTGRES_PASSWORD=Teknasyon1!
-  rmq:
-    image: rabbitmq:3.8
+  redis:
+    image: redis
     networks:
       - case
-    volumes:
-      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
   nestapp1:
     build: ./
     networks:
       - case
     depends_on:
-      - rmq
+      - redis
       - pg
   nestapp2:
     build: ./
     networks:
       - case
     depends_on:
-      - rmq
+      - redis
       - pg
   nestapp3:
     build: ./
     networks:
       - case
     depends_on:
-      - rmq
+      - redis
       - pg
 networks:
   case:
