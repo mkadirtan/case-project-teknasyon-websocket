@@ -1,6 +1,5 @@
 import {
   IsEmail,
-  IsString,
   MaxLength,
   MinLength,
   IsAlphanumeric,
@@ -13,7 +12,6 @@ export class RegisterDto {
   @MaxLength(30)
   readonly name: string;
 
-  @IsString()
   @MinLength(1)
   @MaxLength(30)
   readonly surname: string;

@@ -4,11 +4,14 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
-import { EventsModule } from './events/events.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { MessageModule } from './message/message.module';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: 'development.env' }),
+    EventEmitterModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -25,7 +28,8 @@ import { EventsModule } from './events/events.module';
     }),
     AuthModule,
     UserModule,
-    EventsModule,
+    MessageModule,
+    SocketModule,
   ],
   controllers: [],
   providers: [],

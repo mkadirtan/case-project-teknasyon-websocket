@@ -14,7 +14,9 @@ export class AuthService {
   ) {}
 
   async login(credentials: LoginDto): Promise<TokenDto> {
-    const user = await this.userService.checkCredentials(credentials);
+    const user: UserDetailDto = await this.userService.checkCredentials(
+      credentials,
+    );
 
     return {
       access_token: this.jwtService.sign(user),
