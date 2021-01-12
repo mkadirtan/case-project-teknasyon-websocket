@@ -2,13 +2,15 @@
 <html lang='en'>
 <head>
   <meta charset='UTF-8'>
-  <title>Register</title>
+  <title>Index</title>
   <script src='http://localhost:8080/socket.io/socket.io.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js'
           integrity='sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=='
           crossorigin='anonymous'></script>
 </head>
 <body>
+<h2>!!PLEASE CHECK CONSOLE!!</h2>
+
 <form id='register-form'>
   <label for='name'>Name: </label>
   <input name='name' id='name' type='text'><br>
@@ -42,8 +44,7 @@
 
   <input type='submit' value='Register'>
 </form>
-
-
+<br><a href='/login.html'>Go To Login Page</a>
 <script>
   const form = document.getElementById('register-form');
   form.onsubmit = () => {

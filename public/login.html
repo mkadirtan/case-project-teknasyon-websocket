@@ -9,6 +9,8 @@
           crossorigin='anonymous'></script>
 </head>
 <body>
+<h2>!!PLEASE CHECK CONSOLE!!</h2>
+
 <form id='login-form'>
   <label for='email'>Email: </label>
   <input name='email' id='email' type='email'><br>
@@ -19,8 +21,24 @@
   <input type='submit' value='Login'>
 </form>
 
-
+<button onclick='getActiveUsers()'>Get Active Users</button>
+<br>
+<button onclick='getUserDetail()'>Get Me</button>
+<br>
+<br><br><a href='/register.html'>Go To Register Page</a>
 <script>
+  function getUserDetail() {
+    axios.post('http://localhost:8080/user/me',
+      { headers: { Authorization: `Bearer ${window.access_token}` } })
+      .then(res => console.log(res.data));
+  }
+
+  function getActiveUsers() {
+    axios.post('http://localhost:8080/user/active-users',
+      { headers: { Authorization: `Bearer ${window.access_token}` } })
+      .then(res => console.log(res.data));
+  }
+
   const form = document.getElementById('login-form');
   form.onsubmit = () => {
     const formData = {};
@@ -40,7 +58,8 @@
       console.log('Successfully logged in!');
       const { access_token } = res.data;
       console.log({ access_token });
-      const socket = io('http://localhost:8080/socket', { query: { access_token } });
+      window.access_token = access_token;
+      const socket = io('http://localhost:8080/socket', { query: { access_token }, transports: ['websocket'] });
       socket.on('user-register', e => console.log('user-register', { e }));
       socket.on('user-login', e => console.log('user-login', { e }));
       socket.on('user-logout', e => console.log('user-logout', { e }));
