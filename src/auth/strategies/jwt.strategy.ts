@@ -16,6 +16,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   validate(payload: ParsedTokenDto): UserDetailDto {
-    return pick(payload, ['name', 'surname', 'email', 'language', 'country']);
+    return pick(payload, [
+      'name',
+      'surname',
+      'email',
+      'language',
+      'country',
+      'isActive',
+    ]);
   }
 }

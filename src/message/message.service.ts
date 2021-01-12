@@ -14,6 +14,11 @@ export class MessageService {
     this.eventEmitter.emit(eventName, eventData);
   }
 
+  @OnEvent('LOCAL-user-registered')
+  localUserRegister(user: UserDetailDto) {
+    this.clientProxy.emit('user-register', user);
+  }
+
   @OnEvent('LOCAL-user-login')
   localUserLogin(user: UserDetailDto): void {
     this.clientProxy.emit('user-login', user);

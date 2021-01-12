@@ -31,12 +31,6 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  async findOneByEmail(email: string): Promise<User> {
-    const query = this.createQueryBuilder('user');
-    query.where('user.email = :email', { email });
-    return query.getOne();
-  }
-
   private static async hashPassword(
     password: string,
     salt: string,

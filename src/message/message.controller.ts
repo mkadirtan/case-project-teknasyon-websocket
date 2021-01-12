@@ -16,4 +16,9 @@ export class MessageController {
   globalUserLogout(@Payload() email: string): void {
     this.messageService.emitEvent('GLOBAL-user-logout', email);
   }
+
+  @EventPattern('user-register')
+  globalUserRegister(@Payload() user: UserDetailDto) {
+    this.messageService.emitEvent('GLOBAL-user-register', user);
+  }
 }

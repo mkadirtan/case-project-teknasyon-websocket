@@ -4,9 +4,6 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   ConnectedSocket,
-  //SubscribeMessage,
-  //WsResponse,
-  //MessageBody,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { UseGuards } from '@nestjs/common';
@@ -53,6 +50,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
         'email',
         'language',
         'country',
+        'isActive',
       ]);
       this.clients.set(client, user);
       this.eventEmitter.emit('LOCAL-user-login', user);
@@ -67,12 +65,17 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.eventEmitter.emit('LOCAL-user-logout', email);
   }
 
+  @OnEvent('GLOBAL-user-register')
+  globalUserRegister(user: UserDetailDto) {
+    this.server.emit('user-register', user);
+  }
+
   @OnEvent('GLOBAL-user-login')
   globalUserLogin(user: UserDetailDto) {
     this.server.emit('user-login', user);
   }
 
-  @OnEvent('GLOBAL-user-login')
+  @OnEvent('GLOBAL-user-logout')
   globalUserLogout(email: string) {
     this.server.emit('user-logout', email);
   }

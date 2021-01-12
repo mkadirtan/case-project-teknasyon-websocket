@@ -5,6 +5,7 @@ import {
   MinLength,
   IsISO31661Alpha2,
   IsLocale,
+  IsBoolean,
 } from 'class-validator';
 
 export class UserDetailDto {
@@ -25,4 +26,7 @@ export class UserDetailDto {
 
   @IsISO31661Alpha2()
   readonly country: string;
+
+  @IsBoolean()
+  readonly isActive: boolean;
 }
