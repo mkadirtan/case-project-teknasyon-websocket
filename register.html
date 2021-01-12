@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Register</title>
+  <script src='http://localhost:3000/socket.io/socket.io.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js'
+          integrity='sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=='
+          crossorigin='anonymous'></script>
+</head>
+<body>
+<form id='register-form'>
+  <label for='name'>Name: </label>
+  <input name='name' id='name' type='text'><br>
+
+  <label for='surname'>Surname: </label>
+  <input name='surname' id='surname' type='text'><br>
+
+  <label for='email'>Email: </label>
+  <input name='email' id='email' type='email'><br>
+
+  <label for='password'>Password: </label>
+  <input name='password' id='password' type='password'><br>
+
+
+  <label for='passwordConfirmation'>Password: </label>
+  <input name='passwordConfirmation' id='passwordConfirmation' type='password'><br>
+
+  <label for='country'>Country: </label>
+  <select name='country' id='country'>
+    <option value='TR'>Turkey</option>
+    <option value='UK'>United Kingdom</option>
+    <option value='DE'>Germany</option>
+  </select><br>
+
+  <label for='language'>Language: </label>
+  <select name='language' id='language'>
+    <option value='tr'>Turkish</option>
+    <option value='en'>English</option>
+    <option value='de'>Deutsch</option>
+  </select><br>
+
+  <input type='submit' value='Register'>
+</form>
+
+
+<script>
+  const form = document.getElementById('register-form');
+  form.onsubmit = d => {
+    const formData = {};
+    const length = form.children.length;
+    for (let i = 0; i < length; i++) {
+      const child = form.children[i];
+      if (child.nodeName === 'INPUT' || child.nodeName === 'SELECT') {
+        formData[child.id] = child.value;
+      }
+    }
+
+    const { name, surname, email, password, passwordConfirmation, country, language } = formData;
+    if (password !== passwordConfirmation) {
+      console.error('passwords don\'t match');
+    }
+
+    axios.post('http://localhost:3000/auth/register', {
+      name, surname, email, password, country, language,
+    }).then(res => {
+      console.log('Successfully created account!');
+    }).catch(err => {
+      console.log(err.response.data.message);
+    });
+
+    return false;
+  };
+</script>
+</body>
+</html>
