@@ -28,13 +28,13 @@
 <br><br><a href='/register.html'>Go To Register Page</a>
 <script>
   function getUserDetail() {
-    axios.post('http://localhost:8080/user/me',
+    axios.get('http://localhost:8080/user/me',
       { headers: { Authorization: `Bearer ${window.access_token}` } })
       .then(res => console.log(res.data));
   }
 
   function getActiveUsers() {
-    axios.post('http://localhost:8080/user/active-users',
+    axios.get('http://localhost:8080/user/active-users',
       { headers: { Authorization: `Bearer ${window.access_token}` } })
       .then(res => console.log(res.data));
   }
