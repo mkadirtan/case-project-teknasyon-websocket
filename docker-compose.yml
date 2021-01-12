@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  lb:
+    image: haproxy
+    networks:
+      - case
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy
+  pg:
+    image: postgres:13.0-alpine
+    networks:
+      - case
+    environment:
+      - POSTGRES_DB=teknasyon
+      - POSTGRES_USER=teknasyon
+      - POSTGRES_PASSWORD=Teknasyon1!
+  rmq:
+    image: rabbitmq:3.8-management
+    networks:
+      - case
+    volumes:
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+  ws1:
+    image: nestapp
+    networks:
+      - case
+    depends_on:
+      - rmq
+      - pg
+  ws2:
+    image: nestapp
+    networks:
+      - case
+    depends_on:
+      - rmq
+      - pg
+  ws3:
+    image: nestapp
+    networks:
+      - case
+    depends_on:
+      - rmq
+      - pg
+networks:
+  case:
+    driver: bridge
