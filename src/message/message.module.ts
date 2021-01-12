@@ -8,18 +8,13 @@ import { MessageController } from './message.controller';
   imports: [
     ClientsModule.registerAsync([
       {
-        name: 'RMQ_CLIENT',
+        name: 'REDIS_CLIENT',
         imports: [ConfigModule],
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => ({
-          transport: Transport.RMQ,
+          transport: Transport.REDIS,
           options: {
-            urls: [configService.get<string>('RMQ_CONNECTION_URL')],
-            queue: configService.get('RMQ_QUEUE'),
-            noAck: true,
-            queueOptions: {
-              durable: true,
-            },
+            url: configService.get<string>('REDIS_CONNECTION_URL'),
           },
         }),
       },

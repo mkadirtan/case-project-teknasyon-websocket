@@ -7,6 +7,7 @@ import { join } from 'path';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { MessageModule } from './message/message.module';
 import { SocketModule } from './socket/socket.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -30,6 +31,9 @@ import { SocketModule } from './socket/socket.module';
     UserModule,
     MessageModule,
     SocketModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
   ],
   controllers: [],
   providers: [],
